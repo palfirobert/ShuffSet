@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         mAuth = FirebaseAuth.getInstance();//dasda
-
 
 
 
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void LogIn(View view)
-    {
+    {  if(emailEditText.getText()!=null && passwordEditText.getText()!=null) {
         mAuth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -99,5 +99,13 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+    }
+    else {
+        Toast.makeText(this, "Add email or password", Toast.LENGTH_SHORT).show();
+
+    }
+
+
     }
 }
