@@ -21,6 +21,15 @@
         app:srcCompat="@drawable/background_1080x1920" />
 
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="150dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logIn" />
 
     <Button
         android:id="@+id/logIn"
@@ -56,9 +65,8 @@
         android:layout_width="282dp"
         android:layout_height="50dp"
         android:layout_marginTop="72dp"
-        android:background="#30ffffff"
+        android:background="@drawable/margini_textview"
         android:drawableLeft="@drawable/ic_email"
-
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:textColor="@color/white"
@@ -73,7 +81,7 @@
         android:layout_width="282dp"
         android:layout_height="50dp"
         android:layout_marginTop="36dp"
-        android:background="#30ffffff"
+        android:background="@drawable/margini_textview"
         android:drawableLeft="@drawable/ic_password"
         android:ems="10"
         android:hint="Password"
@@ -122,6 +130,7 @@
         android:layout_marginTop="80dp"
 
         android:clickable="true"
+        android:onClick="onClickGitHubButton"
         app:backgroundTint="@color/white"
         app:layout_constraintStart_toEndOf="@+id/facebook"
         app:layout_constraintTop_toBottomOf="@+id/signUp"
@@ -151,6 +160,28 @@
         app:layout_constraintStart_toEndOf="@+id/floatingActionButton6"
         app:layout_constraintTop_toBottomOf="@+id/signUp"
         app:srcCompat="@drawable/ic_google" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="150dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
+        android:text="OR"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,8 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthCredential;
@@ -29,14 +31,18 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.auth.OAuthProvider;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
     protected FirebaseAuth mAuth;
     private EditText emailEditText,passwordEditText;
     private FloatingActionButton facebookButton;
+    protected OAuthProvider.Builder provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         mAuth = FirebaseAuth.getInstance();
+
+
+
 
 
     }
@@ -143,5 +152,73 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent intent=new Intent(MainActivity.this,MainPageActivity.class);
         startActivity(intent);
+    }
+
+
+
+
+    public void onClickGitHubButton(View view)
+    {
+
+        provider = OAuthProvider.newBuilder("github.com");
+        // Target specific email with login hint.
+        provider.addCustomParameter("login", emailEditText.getText().toString());
+        // Request read access to a user's email addresses.
+// This must be preconfigured in the app's API permissions.
+        List<String> scopes =
+                new ArrayList<String>() {
+                    {
+                        add("user:email");
+                    }
+                };
+        provider.setScopes(scopes);
+        provider.build();
+
+
+        Task<AuthResult> pendingResultTask = mAuth.getPendingAuthResult();
+        if (pendingResultTask != null) {
+            Log.i("coaiele","firebaseUser.getEmail()");
+            // There's something already here! Finish the sign-in for your user.
+            pendingResultTask
+                    .addOnSuccessListener(
+                            new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    openMainPageActivity();
+                                }
+                            })
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(),"2",Toast.LENGTH_SHORT);
+                                }
+                            });
+        } else {
+            Log.i("coaiele","firebaseUser.getEmail()");
+            mAuth
+                    .startActivityForSignInWithProvider(/* activity= */ this, provider.build())
+                    .addOnSuccessListener(
+                            new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    FirebaseUser firebaseUser=mAuth.getCurrentUser();
+
+                                    openMainPageActivity();
+                                    finish();
+                                }
+                            })
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(),"4",Toast.LENGTH_SHORT);
+
+                                }
+                            });
+
+        }
+
+
     }
 }
