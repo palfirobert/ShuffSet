@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "674952483831",
+    "project_id": "shuffset-ee899",
+    "storage_bucket": "shuffset-ee899.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674952483831:android:eb27cffd1ece29081c14f2",
+        "android_client_info": {
+          "package_name": "com.example.shuffset"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674952483831-gl5lfobrhql75lc20npd26ig7eu9fu1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALwT8uMIneZ-BanDwC5u3J7QhrUbvs82M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674952483831-gl5lfobrhql75lc20npd26ig7eu9fu1a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

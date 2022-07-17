@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ShuffSet</string>
+
+    <string name="facebook_app_id">1185695112008949</string>
+    <string name="fb_login_protocol_scheme">fb1185695112008949</string>
+    <string name="facebook_client_token">1d6658d58f093ba65a85193c8c26cc4f</string>
+
+
 </resources>
