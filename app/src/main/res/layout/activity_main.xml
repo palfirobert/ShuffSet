@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="onClickGoogleButton"
     tools:context=".MainActivity">
 
     <ImageView
@@ -11,13 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickBackground"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        android:scaleType="fitXY"
         app:srcCompat="@drawable/background_1080x1920" />
 
 
@@ -52,9 +53,9 @@
 
         android:fontFamily="@font/amatic_sc"
         android:gravity="center"
-        android:text="Log In"
+        android:text="ShuffSet"
         android:textColor="@color/white"
-        android:textSize="90sp"
+        android:textSize="70sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,18 +145,20 @@
         android:layout_marginTop="80dp"
 
         android:clickable="true"
+        android:onClick="onClickAnonymousButton"
         app:backgroundTint="@android:color/darker_gray"
         app:layout_constraintStart_toEndOf="@+id/github"
         app:layout_constraintTop_toBottomOf="@+id/signUp"
         app:srcCompat="@drawable/ic_anonymous" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton7"
+        android:id="@+id/google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="80dp"
         android:clickable="true"
+        android:onClick="onClickGoogleButton"
         app:backgroundTint="@android:color/holo_red_dark"
         app:layout_constraintStart_toEndOf="@+id/floatingActionButton6"
         app:layout_constraintTop_toBottomOf="@+id/signUp"
