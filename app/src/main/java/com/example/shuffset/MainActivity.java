@@ -3,14 +3,19 @@ package com.example.shuffset;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -53,15 +58,18 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     protected FirebaseAuth mAuth;
-    private EditText emailEditText,passwordEditText;
+    private EditText emailEditText,passwordEditText,emailForGitHubAuthentification;
     private FloatingActionButton facebookButton;
     protected OAuthProvider.Builder provider;
-    private SignInClient oneTapClient; //google
-    private BeginSignInRequest signInRequest;//google
-    private static final int REQ_ONE_TAP = 2; //google
-    private boolean showOneTapUI = true;//google
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
+
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    private View emailPopUpGitHub;
+    private Button loginFromPopUp;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,12 +184,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void onClickGitHubButton(View view)
+    public void onClickGitHubButtonLogIn(String name)
     {
 
         provider = OAuthProvider.newBuilder("github.com");
         // Target specific email with login hint.
-        provider.addCustomParameter("login", emailEditText.getText().toString());
+        provider.addCustomParameter("login", name);
         // Request read access to a user's email addresses.
 // This must be preconfigured in the app's API permissions.
         List<String> scopes =
@@ -191,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
         provider.setScopes(scopes);
-        provider.build();
+
 
 
         Task<AuthResult> pendingResultTask = mAuth.getPendingAuthResult();
@@ -204,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     openMainPageActivity();
+                                    Log.i("TAG","a intrat aici");
                                 }
                             })
                     .addOnFailureListener(
@@ -211,10 +220,11 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(getApplicationContext(),"2",Toast.LENGTH_SHORT);
+                                    Log.i("TAG","nu a intrat aici");
                                 }
                             });
         } else {
-
+            Log.i("TAG","a intrat aici2");
             mAuth
                     .startActivityForSignInWithProvider(/* activity= */ this, provider.build())
                     .addOnSuccessListener(
@@ -222,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     FirebaseUser firebaseUser=mAuth.getCurrentUser();
-
+                                    Log.i("TAG","a intrat aici3");
                                     openMainPageActivity();
                                     finish();
                                 }
@@ -231,8 +241,8 @@ public class MainActivity extends AppCompatActivity {
                             new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getApplicationContext(),"4",Toast.LENGTH_SHORT);
-
+                                    Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
+                                    Log.i("TAG","a intrat aici4");
                                 }
                             });
 
@@ -330,4 +340,27 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+
+    public void onClickGitHubButton1(View view)
+    {
+        dialogBuilder=new AlertDialog.Builder(this);
+        emailPopUpGitHub=getLayoutInflater().inflate(R.layout.popupgit,null);
+
+
+        dialogBuilder.setView(emailPopUpGitHub);
+        dialog=dialogBuilder.create();
+        dialog.getWindow().getAttributes().windowAnimations=R.style.MyDialogAnimation;
+        dialog.show();
+        emailForGitHubAuthentification=emailPopUpGitHub.findViewById(R.id.emailForGitHubAuthentification);
+        loginFromPopUp=emailPopUpGitHub.findViewById(R.id.loginFromPopUp);
+        loginFromPopUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickGitHubButtonLogIn(emailForGitHubAuthentification.getText().toString());
+
+            }
+        });
+
+
+    }
 }
